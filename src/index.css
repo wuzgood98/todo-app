@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: hsl(0, 0%, 98%);
+  transition: background 150ms ease-in-out;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 1px solid hsl(233, 11%, 84%);
+  position: relative;
+}
+
+@media (prefers-color-scheme: dark) {
+  input[type="checkbox"] {
+    border: 1px solid hsl(233, 14%, 35%);
+  }
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]#list:checked {
+  background: linear-gradient(
+    to right bottom,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
+  border: none;
+}
+
+input[type="checkbox"]:checked::after,
+input[type="checkbox"]#list:checked::after {
+  content: url(./assets/icon-check.svg);
+  position: absolute;
+  top: -2px;
+  left: 4px;
+  animation: bounce 0.2s ease-in-out;
+  -webkit-animation: bounce 0.2s ease-in-out;
+  -moz-animation: bounce 0.2s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  #todo-item:hover > #delete-btn {
+    display: block;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    top: -1px;
+  }
+  50% {
+    top: -4px;
+  }
+  100% {
+    top: -2px;
+  }
+}
+
+@-webkit-keyframes bounce {
+  0% {
+    top: -1px;
+  }
+  50% {
+    top: -4px;
+  }
+  100% {
+    top: -2px;
+  }
+}
+
+@-moz-keyframes bounce {
+  0% {
+    top: -1px;
+  }
+  50% {
+    top: -4px;
+  }
+  100% {
+    top: -2px;
+  }
+}
