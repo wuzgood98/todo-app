@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLocalStorage } from './utils/getLocalStorage'
 import getLocalStorage from './utils/getLocalStorage'
 import sun from './assets/icon-sun.svg'
@@ -6,6 +6,7 @@ import moon from './assets/icon-moon.svg'
 import { nanoid } from 'nanoid'
 import FilterButtons from './component/FilterButtons'
 import Item from './component/Item'
+import autoAnimate from '@formkit/auto-animate'
 
 const themeType = {
   dark: 'dark',
@@ -20,6 +21,7 @@ function App() {
   const [list, setList] = useState(() => getLocalStorage('todo-list'))
   const [filteredList, setFilteredList] = useState([])
   const [theme, setTheme] = useLocalStorage('theme', themeType.light)
+  const parent = useRef(null)
 
   /* drag and drop */
   let dragStartIndex;
@@ -173,6 +175,10 @@ function App() {
     setFilteredList(list)
   }, [list])
 
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current)
+  }, [parent])
+
   return (
     <main className='h-screen w-screen p-6 font-josefin select-none sm:grid sm:justify-center'>
       <div className="flex flex-col gap-5 md:mt-24">
@@ -187,7 +193,7 @@ function App() {
           <input type="text" name="todo" value={name} onChange={handleChange} className="w-full bg-light text-darkGrayishBlue placeholder:text-darkGrayishBlue placeholder:text-sm outline-none caret-lightGrayishBlue dark:bg-veryDarkDesaturatedBlue transition-colors" placeholder='Create a new todo...' />
         </form>
         {/* list container*/}
-        <div className="bg-light w-full flex flex-col justify-center rounded-md drop-shadow-xl dark:bg-veryDarkDesaturatedBlue transition-colors sm:w-[500px]">
+        <div ref={parent} className="bg-light w-full flex flex-col justify-center rounded-md drop-shadow-xl dark:bg-veryDarkDesaturatedBlue transition-colors sm:w-[500px]">
           {/* list */}
           <Item {...itemProps} />
           {/* end of list */}
